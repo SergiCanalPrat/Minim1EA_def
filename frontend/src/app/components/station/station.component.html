@@ -1,0 +1,34 @@
+
+
+        <h2>Stations</h2>
+        <table>
+                <th>Station</th>
+                <th>State</th>
+                <th>Description</th>
+
+            <tr *ngFor="let station of stationsList">
+                <td>{{station.name}}</td>
+                <td>{{station.state}}</td>
+                <td>{{station.description}}</td>
+            <td>
+                <button class="btn btn-primary" [routerLink]="['/api/bike', station._id]" >View
+                </button>
+                </td>
+            </tr>
+        </table>
+    <div>
+    <!--<table>
+            <th>Bike</th>
+            <th>Kms</th>
+            <th>Description</th>
+        <tr *ngFor="let bike of unassignedbikes">
+            <td>{{bike.name}}</td>
+            <td>{{bike.kms}}</td>
+            <td>{{bike.description}}</td>
+            <td>
+                <a (click)="postBikeStation(bike._id, station._id)"></a>
+            </td>
+        </tr>
+    </table>-->
+    </div>
+

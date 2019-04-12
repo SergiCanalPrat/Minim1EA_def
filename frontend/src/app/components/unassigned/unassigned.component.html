@@ -1,0 +1,20 @@
+<h2>Unassigned Bikes</h2>
+
+<div>
+    <table>
+            <th>
+                <th>Bike</th>
+                <th>Kms</th>
+                <th>Description</th>
+            <tr *ngFor="let bike of station.bikes">
+                <td>{{bike.name}}</td>
+                <td>{{bike.kms}}</td>
+                <td>{{bike.description}}</td>
+            <td>
+                    <a (click)="deleteBikeStation(bike._id, station._id)"></a>
+            </td>
+    
+        </tr>
+    </table>
+</div>
+<div>
