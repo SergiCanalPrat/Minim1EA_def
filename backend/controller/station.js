@@ -1,7 +1,8 @@
 'use strict'
 
+const {ObjectId} = require('mongodb');
 const Station = require('../modelos/station')
-const bike = require('../modelos/bike')
+const Bike = require('../modelos/bike')
 
 //funciones
 //listado de stations
@@ -24,117 +25,76 @@ function saveStation(req, res) {
     console.log(station);
     station.save((err, station) => {
         console.log(station)
-
         if (err) res.status(500).send({mensaje: `Error al guardar en la base de datos ${err}`})
-
-        return res.status(200).send({station: station})
-        console.log(err)
+        return res.status(200).send(station)
     })
 }
 
 
 //detalle de las stations una por una
 function getStationById(req, res) {
+    console.log("getStationById")
     let stationId = req.params.stationId
-    Station.findById(stationId, (err, station) => {
+    Station.findById(ObjectId(stationId), (err, station) => {
         if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
         if (!station) return res.status(404).send(`La station no existe`)
-        res.status(200).send({station})
+        res.status(200).send(station)
     })
 }
 
-/*ver bike que pertenece a una station
-function getBikeDeStationById(req, res) {
-    let bikeId = req.params.bikeId
-    let stationId = req.params.bikeId
-
-    Station.findById({_id: stationId}, (err, station) => {
-        if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
-        if (!station) return res.status(404).send(`station no existe`)
-        bikes = Station.getBikesdeStation(station);//COM BUSCO A DINS DE BIKES?
-        Bike.findById({_id:bikeId}), (err, bike) => {
-            if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
-            if (!bike) return res.status(404).send(`bike no esta en la estacion`)
-        }
-        res.status(200).send({bike})
-
-
-    })
-    
-}*/
-
 //listar bikes de una estación
-function getBikesdeStation(req, res) {
+function getBikesDeStation(req, res) {
     let stationId = req.params.stationId
-
-    Station.findById({_id: stationId}, (err, result) => {
-        console.log(result.bikes)
+    Station.findById(ObjectId(stationId), (err, station) => {
         //console.log(bikes)
         if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
-
-        return res.status(200).send(result.bikes)
-        /*var arraydeIds = result.bikes
-        console.log(arraydeIds)
-        arraydeIds.forEach(element => {
-            console.log(element)
-            Bike.findById({_id: element}, (err, bikes) => {
-                if(err) return res.status(500).send(`Error al realizar la petición: ${err} `)
-                
-                return res.status(200).send(element)
+        console.log(station.bikes) // PINTA IDS DE LES BIKES DE LA STATION
+        var bikes = []
+        station.bikes.array.forEach(bikeId => {
+            Bike.findById(ObjectId(bikeId), (err, bike) => {
+                if(!err) bikes.push(bike)
+                else return res.status(500).send(`Error al realizar la petición: ${err} `)
             })
-        });*/
-        //Bike.findById({_id: result.bikes}, (err, bikes) => {
-
-        //})
+        });
+        return res.status(200).send(bikes)
     })
 }
 
 //añadir un bike (ya existente) a una station
 function addBikeToStation(req, res) {
     let stationId = req.params.stationId
-    console.log(req.params.stationId)
-    let bikeId = req.params.stationId
-    console.log(req.params.bikeId)
-
-    Station.update({_id: stationId}, {"$push": {"bikes": bikeId}}, (err, result) => {
+    console.log(stationId)
+    let bikeId = req.params.bikeId
+    console.log(bikeId)
+    Station.update(ObjectId(stationId), {"$push": {"bikes": bikeId}}, (err, result) => {
         console.log(result)
         if (err) res.status(500).send(`Error al actualizar la station: ${err}`)
         if (!result) return res.status(404).send('La station no esta en la bbdd')
-
-        res.status(200).send(result)
+        Bike.update(ObjectId(bikeId), {"$set": {assigned: true}}, (err, resUpd) => {
+            if (err) res.status(500).send(`Error al actualizar la station: ${err}`)
+            res.status(200).send(resUpd)
+        })
     })
-
 }
 
 function deleteBikeDeStation (req, res){
     let stationId = req.params.stationId
     let bikeId = req.params.bikeId
-    Station.update({_id: stationId}, {"$pop": {"bikes": bikeId}}, (err, result) => {
+    Station.update(ObjectId(stationId), {"$pull": {"bikes": bikeId}}, (err, result) => {
         if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-    
-        bike.remove(err => {
-            if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-            
-            res.status(200).send( `bike eliminada` + result)
+        Bike.update(ObjectId(bikeId), {"$set": {assigned: false}}, (err, res) => {
+            if (err) res.status(500).send( `Error al hacer update del estado: ${err}`)
+            res.status(200).send( `bike modificada` + res)
         })
-    
     })
-
 }
 
 function deleteStation (req, res){
     let stationId = req.params.stationId
-    Station.findById(stationId, (err, station) => {
+    Station.remove(ObjectId(stationId), (err, result) => {
         if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-    
-        station.remove(err => {
-            if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-            
-            res.status(200).send( `station eliminada`)
-        })
-    
+        else res.status(200).send('station eliminada')
     })
-
 }
 
 module.exports = {
@@ -142,7 +102,7 @@ module.exports = {
     saveStation,
     getStationById,
     //getBikeDeStationById,
-    getBikesdeStation,
+    getBikesDeStation,
     addBikeToStation,
     deleteBikeDeStation,
     deleteStation

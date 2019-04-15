@@ -10,8 +10,8 @@ const api = express.Router()
 api.post('/station/new', stationCtrl.saveStation)
 api.post('/station/newBike/:stationId', stationCtrl.addBikeToStation)
 api.get('/station/:stationId', stationCtrl.getStationById)
-api.get('/station/stations/', stationCtrl.getStations)
-api.get('/station/getBikes/:stationId', stationCtrl.getBikesdeStation)
+api.get('/stations', stationCtrl.getStations)
+api.get('/station/getBikes/:stationId', stationCtrl.getBikesDeStation)
 
 
 
@@ -23,11 +23,11 @@ api.delete('/station/deleteBike/:stationId/:bikeId',stationCtrl.deleteBikeDeStat
 //Bikes: http://localhost:3000/api/
 api.post('/bike/new', bikeCtrl.saveBike)
 api.get('/bike/getBikes', bikeCtrl.getBikes)
-api.get('/bike/unassigned', bikeCtrl.getUnassignedBikes)
+api.get('/unassigned', bikeCtrl.getUnassignedBikes)
 //api.get('/bike/:bikeId', bikeCtrl.getBikeById)
 api.get('/bike/:bikeId', bikeCtrl.getBikeById)
 //api.put('/bike/modificar/:bikeId', bikeCtrl.updateBike)
-api.delete('/bike/eliminar/:bikeId', bikeCtrl.deleteBike)
+api.delete('/bike/delete/:bikeId', bikeCtrl.deleteBike)
 
 //api.put('/relacion/:stationId/:bikeId', stationCtrl.addBikeToStation)
 //api.get('/relacion/getStations', stationCtrl.getStations)

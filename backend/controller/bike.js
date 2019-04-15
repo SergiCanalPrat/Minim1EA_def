@@ -1,9 +1,9 @@
 'use strict'
+const {ObjectId} = require('mongodb');
 const Bike = require('../modelos/bike')
 
 //funciones
 function getBikes(req, res) {
-    
     Bike.find({}, (err, result) => { 
         if (err) return res.status(500).send({message: `Error al realizar la petición: ${err}`})
         if (!result) return res.status(404).send({message: 'No existen bikes en la bbdd'})
@@ -11,10 +11,11 @@ function getBikes(req, res) {
         res.status(200).send(result)
     })
   }
+
 // buscar bike por id
 function getBikeById(req, res) {
     let bikeId = req.params.bikeId
-    Bike.findById(bikeId,(err, result) => {
+    Bike.findById(ObjectId(bikeId),(err, result) => {
         if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
         if (!result) return res.status(404).send(`bike no existe`)
         res.status(200).send(result)
@@ -23,28 +24,27 @@ function getBikeById(req, res) {
 
 //buscar unassigned bikes
 function getUnassignedBikes(req, res){
-    Bike.find({state: false},(err, result) => {
+    Bike.find({assigned: false},(err, result) => {
         if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
         if (!result) return res.status(404).send(`bike no existe`)
         res.status(200).send(result)
     })
 }
 
-
 //crear un nuevo bike
 function saveBike (req,res){
     console.log(req.body);
-
-    let bike3 = new Bike( {
+    let bike = new Bike({
         name: req.body.name,
         kms: req.body.kms,
-        description: req.body.description
+        description: req.body.description,
+        assigned: false
     });
-    console.log('la bici es'+ bike3)
-    bike3.save( (err, bike4) => {
-        console.log(bike4)
+    console.log('la bici es'+ bike)
+    bike.save((err, result) => {
+        console.log(result)
         if (err) res.status(500).send({mensaje: 'Error al guardar en la base de datos ${err}'})
-        res.status(200).send({bike4})
+        res.status(200).send(result)
     })   
 }
 
@@ -63,17 +63,10 @@ function updateBike (req, res){
 //eliminar bike
 function deleteBike (req, res){
     let bikeId = req.params.bikeId
-    Bike.findById(bikeId, (err, bike) => {
+    Bike.remove(ObjectId(bikeId), (err, result) => {
         if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-    
-        bike.remove(err => {
-            if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
-            
-            res.status(200).send( `bike eliminada`)
-        })
-    
+        else res.status(200).send('station eliminada')
     })
-
 }
 
 module.exports = {

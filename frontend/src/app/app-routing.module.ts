@@ -4,6 +4,7 @@ import { BikeComponent } from './components/bike/bike.component';
 import { StationComponent } from './components/station/station.component'
 import { AppComponent } from './app.component'; 
 import { HomeComponent } from './components/home/home.component';
+import { UnassignedComponent } from './components/unassigned/unassigned.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'api/app' , component: AppComponent},
   { path: 'api/bike', component: BikeComponent },
   { path: 'api/station', component: StationComponent },
-  { path: 'api/unassigned', component: BikeComponent } 
+  { path: 'api/unassigned', component: UnassignedComponent } 
 
 ];
 

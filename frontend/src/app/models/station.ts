@@ -3,6 +3,7 @@ export class Station {
   name: string;
   state: string;
   description: string;
+  static _id: any;
 
   constructor(_id = '', name = '', state = '', description = '') {
     this.name = name;

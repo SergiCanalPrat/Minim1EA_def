@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class BikeService {  
+export class UnassignedService {  
   environment: Environments;
   selectedBike: Bike; 
 
@@ -18,10 +18,10 @@ export class BikeService {
    }
    //recoger los datos en http 
    
-  getBikes() :Observable<Bike[]>{
-    return this.http.get<Bike[]>(this.environment.urlBike + "getBikes");
-  }
 
+  getUnassignedBikes(): Observable<Bike[]>{
+    return this.http.get<Bike[]>(this.environment.urlBase + "unassigned");
+  }
 
   getBikeById(_id: string): Observable<Bike> {
     return this.http.get<Bike>(this.environment.urlBike + `${_id}`);

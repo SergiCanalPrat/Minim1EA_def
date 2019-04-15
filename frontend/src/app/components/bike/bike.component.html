@@ -1,20 +1,28 @@
 <h2>Bikes</h2>
+<style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 15px;
+    }
 
+
+    </style>
 <div>
     <table>
-            <th>
+            <tr>
                 <th>Bike</th>
                 <th>Kms</th>
                 <th>Description</th>
-            <tr *ngFor="let bike of station.bikes">
-                <td>{{bike.name}}</td>
+            </tr>
+            <tr *ngFor="let bike of bikes">
+                <td> {{bike.name}}</td>
                 <td>{{bike.kms}}</td>
-                <td>{{bike.description}}</td>
-            <td>
-                    <a (click)="deleteBikeStation(bike._id, station._id)"></a>
-            </td>
-    
-        </tr>
+                <td> {{bike.description}} <button type="button" style="margin-left : 0.5cm; float: right" class="btn btn-danger" (click)="deleteBike(bike._id)">Delete Bike</button></td>
+            </tr>
+
     </table>
 </div>
 <div>

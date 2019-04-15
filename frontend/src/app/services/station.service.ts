@@ -22,7 +22,7 @@ export class StationService {
   }
 
   getStations() :Observable<Station[]>{
-    return this.http.get<Station[]>(this.environment.urlStation + "stations");
+    return this.http.get<Station[]>(this.environment.urlStations);
   }
 
   /*getBikes() { 
@@ -34,6 +34,8 @@ export class StationService {
   }
 
   deleteStation(_id: string) {
+    console.log("ENTRA AL DELETE");
+
     return this.http.delete(this.environment.urlStation + `${_id}`)
   }
 
@@ -41,8 +43,8 @@ export class StationService {
     return this.http.get<Bike>(this.environment.urlStation + `${_idStation}` + `/${_idBike}`)
   }
 
-  getBikesDeStation(_id: String){
-    return this.http.get<Bike[]>(this.environment.urlStation +  + `${_id}` + "/getBikes")
+  getBikesDeStation(_id: String): Observable<Bike[]> {
+    return this.http.get<Bike[]>(this.environment.urlStation + `${_id}` + "/getBikes")
   }
 
   addBikeToStation (bike: Bike){

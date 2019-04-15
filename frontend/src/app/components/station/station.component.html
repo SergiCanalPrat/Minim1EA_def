@@ -1,19 +1,27 @@
 
 
         <h2>Stations</h2>
+
+        <style>
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 15px;
+            }
+            </style>
+
         <table>
+            <tr>
                 <th>Station</th>
                 <th>State</th>
                 <th>Description</th>
-
-            <tr *ngFor="let station of stationsList">
+            </tr>
+            <tr *ngFor="let station of stations">
                 <td>{{station.name}}</td>
                 <td>{{station.state}}</td>
-                <td>{{station.description}}</td>
-            <td>
-                <button class="btn btn-primary" [routerLink]="['/api/bike', station._id]" >View
-                </button>
-                </td>
+                <td>{{station.description}} <button button type="button" style="margin-left : 0.5cm" class="btn btn-success" (click)="deleteBike(bike._id)">View</button></td>            
             </tr>
         </table>
     <div>

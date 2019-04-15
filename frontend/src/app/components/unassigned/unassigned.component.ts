@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BikeService } from 'src/app/services/bike.service';
+import { UnassignedService } from 'src/app/services/unassigned.service';
 import { ActivatedRoute } from '@angular/router';
 import { Bike } from 'src/app/models/bike';
 
@@ -12,7 +12,7 @@ import { Bike } from 'src/app/models/bike';
 })
 export class UnassignedComponent implements OnInit {
 
-  constructor( private activatedRouter: ActivatedRoute, private bikeService: BikeService) { }
+  constructor( private activatedRouter: ActivatedRoute, private unassignedService: UnassignedService) { }
 
   unassBike = new Array<Bike>();
 
@@ -22,7 +22,7 @@ export class UnassignedComponent implements OnInit {
   }
 
   getUnassignedBikes(){
-    this.bikeService.getUnassignedBikes().subscribe(res => {
+    this.unassignedService.getUnassignedBikes().subscribe(res => {
       this.unassBike = res;
       console.log("Unassigned Bikes: " + this.unassBike)
      })  
