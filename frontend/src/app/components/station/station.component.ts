@@ -16,6 +16,7 @@ export class StationComponent implements OnInit {
 
   constructor(private StationService: StationService, private activatedRouter: ActivatedRoute) { }
   stations: Station[];
+  station: Station;
   
   ngOnInit() {
     this.activatedRouter.params.subscribe(params => {
@@ -30,6 +31,17 @@ export class StationComponent implements OnInit {
       console.log("lista de stations" + this.stations )
     })
   }
+
+  getStationById(_id: string){
+    this.StationService.getStationById(_id)
+    .subscribe(res =>{
+      this.station = res;
+      console.log(res); 
+      console.log(this.station);
+    });
+  }
+
+
 
   
 

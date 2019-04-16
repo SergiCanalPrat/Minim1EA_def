@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'api/app' , component: AppComponent},
   { path: 'api/bike', component: BikeComponent },
   { path: 'api/station', component: StationComponent },
+  { path: 'api/stations', component: StationComponent },
   { path: 'api/unassigned', component: UnassignedComponent } 
 
 ];
