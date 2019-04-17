@@ -13,7 +13,7 @@ export class BikeService {
   selectedBike: Bike; 
 
   constructor( private http: HttpClient) {
-    this.selectedBike = new Bike("",null,"",false);
+    this.selectedBike = new Bike("","",null,"",false);
     this.environment = new Environments();
    }
    //recoger los datos en http 

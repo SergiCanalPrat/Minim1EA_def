@@ -33,7 +33,7 @@ export class BikeComponent implements OnInit {
   }
 
   deleteBike(bikeId: string){    
-    this.bikeService.deleteBike(this.station._id).subscribe(res =>{
+    this.bikeService.deleteBike(bikeId).subscribe(res =>{
       console.log("Deleting bike of station " + this.station._id +  "with id: " + bikeId);
       console.log(res);
     })

@@ -10,6 +10,7 @@ import {BikeComponent} from './components/bike/bike.component';
 import {StationComponent} from './components/station/station.component';
 import { HomeComponent } from './components/home/home.component';
 import { UnassignedComponent } from './components/unassigned/unassigned.component';
+import { StationDetailComponent } from './components/station-detail/station-detail.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { UnassignedComponent } from './components/unassigned/unassigned.componen
     BikeComponent,
     StationComponent,
     HomeComponent,
-    UnassignedComponent
+    UnassignedComponent,
+    StationDetailComponent
   ],
   imports: [
     BrowserModule,

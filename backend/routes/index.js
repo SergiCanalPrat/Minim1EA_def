@@ -8,7 +8,7 @@ const api = express.Router()
 
 //STATION: http://localhost:3000/api/
 api.post('/station/new', stationCtrl.saveStation)
-api.post('/station/newBike/:stationId', stationCtrl.addBikeToStation)
+api.post('/station/newBike/', stationCtrl.addBikeToStation)
 api.get('/station/:stationId', stationCtrl.getStationById)
 api.get('/stations', stationCtrl.getStations)
 api.get('/station/getBikes/:stationId', stationCtrl.getBikesDeStation)

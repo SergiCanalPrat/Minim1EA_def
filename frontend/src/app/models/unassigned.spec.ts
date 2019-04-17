@@ -1,4 +1,5 @@
-import {Unassigned} from './unassigned';
+import { Unassigned } from './unassigned';
+
 
 describe('Unassigned', () => {
   it('should create an instance', () => {

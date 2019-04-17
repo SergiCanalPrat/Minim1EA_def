@@ -2,8 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { UnassignedService } from 'src/app/services/unassigned.service';
 import { ActivatedRoute } from '@angular/router';
 import { Bike } from 'src/app/models/bike';
+import { Station } from 'src/app/models/station';
+import { Unassigned } from 'src/app/models/unassigned';
+import { Modify } from 'src/app/models/modify'
+
+import { StationService } from 'src/app/services/station.service';
 
 
+declare var M: any;
 
 @Component({
   selector: 'app-unassigned',
@@ -12,9 +18,13 @@ import { Bike } from 'src/app/models/bike';
 })
 export class UnassignedComponent implements OnInit {
 
-  constructor( private activatedRouter: ActivatedRoute, private unassignedService: UnassignedService) { }
+  unassBikes = new Array<Unassigned>();
+  unassBike = new Unassigned("");
+  bike = new Bike;
+  station = new Station("","","","",null);
+  modify = new Modify;
 
-  unassBike = new Array<Bike>();
+  constructor( private StationService: StationService, private activatedRouter: ActivatedRoute, private unassignedService: UnassignedService) { }
 
   ngOnInit() {
     this.getUnassignedBikes()
@@ -23,8 +33,21 @@ export class UnassignedComponent implements OnInit {
 
   getUnassignedBikes(){
     this.unassignedService.getUnassignedBikes().subscribe(res => {
-      this.unassBike = res;
-      console.log("Unassigned Bikes: " + this.unassBike)
+      this.unassBikes = res;
+      console.log("Unassigned Bikes: " + this.unassBikes)
      })  
   }
+
+  addBikeToStation(idBike: string, idStation: string){
+    let modify = new Modify(idBike, idStation);
+    this.unassignedService.addBikeToStation(modify)
+      .subscribe(
+        res => {
+          console.log(res);
+        });
+  }
+
+
+
+  
 }

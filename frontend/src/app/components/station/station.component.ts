@@ -17,6 +17,7 @@ export class StationComponent implements OnInit {
   constructor(private StationService: StationService, private activatedRouter: ActivatedRoute) { }
   stations: Station[];
   station: Station;
+  bikes: Bike[];
   
   ngOnInit() {
     this.activatedRouter.params.subscribe(params => {
@@ -32,17 +33,13 @@ export class StationComponent implements OnInit {
     })
   }
 
-  getStationById(_id: string){
-    this.StationService.getStationById(_id)
+  getBikesDeStation(_idStation: string){
+    this.StationService.getBikesDeStation(_idStation)
     .subscribe(res =>{
-      this.station = res;
+      this.bikes = res;
       console.log(res); 
-      console.log(this.station);
+      console.log(this.bikes);
     });
   }
-
-
-
-  
 
 }

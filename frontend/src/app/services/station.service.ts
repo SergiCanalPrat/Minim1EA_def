@@ -4,6 +4,7 @@ import {Station} from "../models/station";
 import {Bike} from '../models/bike';
 import {Environments} from "./environments";
 import { Observable } from 'rxjs';
+import { Modify } from '../models/modify';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class StationService {
   selectedBike: Station;
 
   constructor(private http: HttpClient) {
-    this.selectedBike = new Station();
+    this.selectedBike = new Station("","","","",null);
     this.environment = new Environments();
   }
 
@@ -44,11 +45,13 @@ export class StationService {
   }
 
   getBikesDeStation(_id: String): Observable<Bike[]> {
-    return this.http.get<Bike[]>(this.environment.urlStation + `${_id}` + "/getBikes")
+    return this.http.get<Bike[]>(this.environment.urlStation + "getBikes/" + `${_id}` )
   }
 
-  addBikeToStation (bike: Bike){
-    return this.http.post(this.environment.urlStation + "newBike", bike);
+  addBikeToStation(modify: Modify) {
+    return this.http.post(this.environment.urlStation+"/newbike", modify);
+    
   }
+
 
 }

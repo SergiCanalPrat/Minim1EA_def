@@ -1,5 +1,4 @@
 'use strict'
-const {ObjectId} = require('mongodb');
 const Bike = require('../modelos/bike')
 
 //funciones
@@ -15,11 +14,11 @@ function getBikes(req, res) {
 // buscar bike por id
 function getBikeById(req, res) {
     let bikeId = req.params.bikeId
-    Bike.findById(ObjectId(bikeId),(err, result) => {
+    Bike.findById(bikeId),(err, result) => {
         if (err) return res.status(500).send(`Error al realizar la petición: ${err} `)
         if (!result) return res.status(404).send(`bike no existe`)
         res.status(200).send(result)
-    })
+    }
 }
 
 //buscar unassigned bikes
@@ -63,10 +62,10 @@ function updateBike (req, res){
 //eliminar bike
 function deleteBike (req, res){
     let bikeId = req.params.bikeId
-    Bike.remove(ObjectId(bikeId), (err, result) => {
+    Bike.remove(bikeId), (err, result) => {
         if (err) res.status(500).send( `Error al eliminarlo: ${err}`)
         else res.status(200).send('station eliminada')
-    })
+    }
 }
 
 module.exports = {

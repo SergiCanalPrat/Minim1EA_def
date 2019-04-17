@@ -21,7 +21,7 @@
             <tr *ngFor="let station of stations">
                 <td>{{station.name}}</td>
                 <td>{{station.state}}</td>
-                <td>{{station.description}} <button [routerLink]="['/api/station', station._id]" type="button" style="margin-left : 0.5cm" class="btn btn-success" (click)="getStationById(station._id)">View</button></td>            
+                <td>{{station.description}} <button type="button" style="margin-left : 0.5cm; float: right" class="btn btn-success" (click)="getBikesDeStation(station._id)">View</button></td>            
             </tr>
         </table>
     <div>
